@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DATARI - Automação de atendimento + Inteligência de Dados para PMEs. Transforme leads perdidos em vendas previsíveis com IA.">
+    <meta name="theme-color" content="#0A1E3F">
+    <title>DATARI — Automação + Inteligência de Dados para PMEs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/monograma.ico" type="image/x-icon">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul-profundo: #0A1E3F;
+            --ciano: #00D9FF;
+            --ouro: #D4AF37;
+            --grafite: #1F2937;
+            --branco: #F9FAFB;
+            --cinza-claro: #F3F4F6;
+            --cinza-medio: #E5E7EB;
+            --cinza-escuro: #374151;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--grafite);
+            background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #FFFFFF 100%);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER STICKY ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(10, 30, 63, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100%;
+            object-fit: contain;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--azul-profundo);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--ciano);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--ciano), var(--ouro));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .btn-header {
+            background: linear-gradient(135deg, var(--ciano), #00B8CC);
+            color: var(--azul-profundo);
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.2);
+        }
+
+        .btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 217, 255, 0.35);
+        }
+
+        /* ===== MENU MOBILE ===== */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--azul-profundo);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 25%, #F0F8FB 75%, #FFFFFF 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--azul-profundo);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--azul-profundo) 0%, #0D3F7F 50%, var(--ciano) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--cinza-escuro);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-kpis {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: var(--ciano);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 217, 255, 0.15);
+        }
+
+        .kpi-valor {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--ciano), var(--ouro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-texto {
+            font-size: 0.9rem;
+            color: var(--cinza-escuro);
+            font-weight: 500;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--ciano), #00B8CC);
+            color: var(--azul-profundo);
+            box-shadow: 0 6px 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--ciano);
+            border: 2px solid var(--ciano);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 217, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-box {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 30, 63, 0.05) 0%, rgba(0, 217, 255, 0.08) 50%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid rgba(0, 217, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--ciano);
+            opacity: 0.7;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(0, 217, 255, 0.02) 10px,
+                rgba(0, 217, 255, 0.02) 20px
+            );
+            pointer-events: none;
+        }
+
+        /* ===== SEÇÕES PADRÃO ===== */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--azul-profundo);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--cinza-escuro);
+            text-align: center;
+            margin-bottom: 3.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(240, 248, 251, 0.5) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            border-color: var(--ciano);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: var(--azul-profundo);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: var(--cinza-escuro);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* ===== PLANOS / PRICING ===== */
+        .pricing-section {
+            background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+            border: 2px solid rgba(0, 217, 255, 0.15);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plan-card.featured {
+            border-color: var(--ouro);
+            background: linear-gradient(135deg, #FFFBF0 0%, #FFFFFF 100%);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.2);
+        }
+
+        .plan-card.featured::before {
+            content: '✨ RECOMENDADO';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: linear-gradient(135deg, var(--ouro), #E5C158);
+            color: var(--azul-profundo);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .plan-card:hover {
+            border-color: var(--ciano);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.1);
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--azul-profundo);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--ciano), var(--ouro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--cinza-escuro);
+        }
+
+        .plan-bullets {
+            list-style: none;
+            margin: 2rem 0;
+            flex-grow: 1;
+        }
+
+        .plan-bullets li {
+            padding: 0.7rem 0;
+            color: var(--cinza-escuro);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .plan-bullets li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--ciano);
+            font-weight: 800;
+        }
+
+        .plan-cta {
+            margin-top: 2rem;
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .plan-cta.primary {
+            background: linear-gradient(135deg, var(--ciano), #00B8CC);
+            color: var(--azul-profundo);
+        }
+
+        .plan-cta.secondary {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--ciano);
+            border: 2px solid var(--ciano);
+        }
+
+        /* ===== STEPS / COMO FUNCIONA ===== */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--ciano), #00B8CC);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--azul-profundo);
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.25);
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            color: var(--azul-profundo);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .step-card p {
+            color: var(--cinza-escuro);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ===== FAQ ===== */
+        .faq-container {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--ciano);
+            box-shadow: 0 8px 20px rgba(0, 217, 255, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(10, 30, 63, 0.02) 0%, rgba(0, 217, 255, 0.02) 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--azul-profundo);
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: linear-gradient(135deg, rgba(10, 30, 63, 0.04) 0%, rgba(0, 217, 255, 0.04) 100%);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            color: var(--ciano);
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 1.5rem;
+            color: var(--cinza-escuro);
+            border-top: 1px solid rgba(0, 217, 255, 0.15);
+            background: rgba(240, 248, 251, 0.3);
+            line-height: 1.7;
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== CTA FINAL ===== */
+        .cta-final {
+            background: linear-gradient(135deg, var(--azul-profundo) 0%, #0D3F7F 50%, #0A2E5E 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-final h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .cta-final p {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-buttons .btn {
+            background: var(--ciano);
+            color: var(--azul-profundo);
+        }
+
+        .cta-buttons .btn:hover {
+            background: #00B8CC;
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, var(--azul-profundo) 0%, #0D3F7F 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            height: 40px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo img {
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .footer-text {
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--ciano);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--ouro);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(0, 217, 255, 0.2);
+            padding-top: 2rem;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* ===== BOTÃO FLUTUANTE WHATSAPP ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366, #20BA61);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+            transition: all 0.3s ease;
+            z-index: 999;
+            text-decoration: none;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                gap: 1rem;
+            }
+
+            nav {
+                display: none;
+                gap: 1.5rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero {
+                margin-top: 70px;
+                padding: 3rem 1.5rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .hero-visual {
+                height: 300px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card.featured {
+                transform: scale(1);
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-kpis {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+            }
+
+            nav.active {
+                display: flex;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 2rem;
+                border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            }
+
+            .whatsapp-float {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ===== ANIMAÇÕES SUAVES ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* ===== SCROLL SUAVE ===== */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="assets/images/logo-combinado.png" alt="DATARI Logo">
+            </div>
+            <nav id="nav">
+                <a href="#problema">Problema</a>
+                <a href="#solucao">Solução</a>
+                <a href="#planos">Planos</a>
+                <a href="#como-funciona">Como funciona</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <button class="btn-header" onclick="document.getElementById('cta-final').scrollIntoView()">Agendar diagnóstico</button>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Transforme leads perdidos em vendas previsíveis.</h1>
+                <p>A DATARI organiza atendimento, qualifica leads, acelera conversões e entrega inteligência de dados para PMEs brasileiras.</p>
+                
+                <div class="hero-kpis">
+                    <div class="kpi-card">
+                        <div class="kpi-valor">5s</div>
+                        <div class="kpi-texto">Resposta automática</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-valor">+35%</div>
+                        <div class="kpi-texto">Mais agendamentos</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-valor">-80%</div>
+                        <div class="kpi-texto">Menos leads frios</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-valor">24/7</div>
+                        <div class="kpi-texto">Funil com dados</div>
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="document.getElementById('cta-final').scrollIntoView()">Agendar diagnóstico</button>
+                    <a href="https://wa.me/5511999999999" class="btn btn-secondary">Falar no WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="visual-box">
+                    📊 Dashboard de IA
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROBLEMA ===== -->
+    <section id="problema">
+        <h2 class="section-title">Você está perdendo vendas antes da conversa começar.</h2>
+        <p class="section-subtitle">A maioria das PMEs não consegue responder rápido aos leads. O resultado? Oportunidades perdidas todos os dias.</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">❄️</div>
+                <h3>Lead esfria</h3>
+                <p>Sem resposta rápida, o interessado em seu serviço vai para concorrente que responde em segundos.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Follow-up falha</h3>
+                <p>Leads qualificados chegam, mas o acompanhamento manual é caótico e leva semanas.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📉</div>
+                <h3>Gestor sem números</h3>
+                <p>Você não sabe quais canais convertem mais, quem é lead de verdade ou onde está perdendo dinheiro.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SOLUÇÃO ===== -->
+    <section id="solucao">
+        <h2 class="section-title">A DATARI coloca ordem no seu funil.</h2>
+        <p class="section-subtitle">Automação inteligente + Dados que falam. Responda em segundos, qualifique leads e venda com confiança.</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Velocidade</h3>
+                <p>Respostas automáticas em menos de 5 segundos. Seu lead nunca mais espera. O agente DATARI trabalha 24/7 sem cansaço.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔗</div>
+                <h3>Consistência</h3>
+                <p>Nenhum lead fica sem próximo passo. Funil automatizado, nutrição de leads, follow-up inteligente com IA.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">👁️</div>
+                <h3>Visibilidade</h3>
+                <p>Dashboard mostra tudo: leads, conversas, vendas, agendamentos. Relatórios semanais com recomendações para vender mais.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PLANOS ===== -->
+    <section id="planos" class="pricing-section">
+        <h2 class="section-title">Escolha o plano certo para seu negócio.</h2>
+        <p class="section-subtitle">4 opções. Comece enxuto, escale conforme cresce.</p>
+        
+        <div class="pricing-cards">
+            <div class="plan-card">
+                <h3 class="plan-name">Starter</h3>
+                <div class="plan-price">R$ 497 <span>/mês</span></div>
+                <ul class="plan-bullets">
+                    <li>Agente IA WhatsApp</li>
+                    <li>1 canal adicional</li>
+                    <li>Qualificação básica</li>
+                    <li>Suporte por e-mail</li>
+                </ul>
+                <button class="plan-cta secondary">Começar</button>
+            </div>
+
+            <div class="plan-card featured">
+                <h3 class="plan-name">Pro</h3>
+                <div class="plan-price">R$ 997 <span>/mês</span></div>
+                <ul class="plan-bullets">
+                    <li>Até 3 canais integrados</li>
+                    <li>Funil de vendas</li>
+                    <li>Nutrição de leads</li>
+                    <li>Suporte prioritário</li>
+                </ul>
+                <button class="plan-cta primary">Começar agora</button>
+            </div>
+
+            <div class="plan-card">
+                <h3 class="plan-name">Premium</h3>
+                <div class="plan-price">R$ 1.997 <span>/mês</span></div>
+                <ul class="plan-bullets">
+                    <li>Gestão de tráfego pago</li>
+                    <li>Otimização por dados</li>
+                    <li>Escala comercial</li>
+                    <li>Gestor dedicado</li>
+                </ul>
+                <button class="plan-cta secondary">Começar</button>
+            </div>
+
+            <div class="plan-card">
+                <h3 class="plan-name">+ Inteligência</h3>
+                <div class="plan-price">R$ 297 <span>/mês</span></div>
+                <ul class="plan-bullets">
+                    <li>Relatórios semanais</li>
+                    <li>Dashboard IA</li>
+                    <li>Recomendações</li>
+                    <li>Análise comportamento</li>
+                </ul>
+                <button class="plan-cta secondary">Adicionar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMO FUNCIONA ===== -->
+    <section id="como-funciona">
+        <h2 class="section-title">Como funciona em 4 etapas.</h2>
+        <p class="section-subtitle">Diagnóstico rápido, implantação, conversão e acompanhamento contínuo.</p>
+        
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Diagnóstico</h3>
+                <p>Entendemos seu funil, canais e desafios reais. Sem promessa. Só diagnóstico honesto.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Implantação</h3>
+                <p>Agente IA configurado em 48h. Integração com seus canais. Testes de qualificação.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Conversão</h3>
+                <p>Seu funil respira. Leads qualificados chegam rápido. Vendas ficam previsíveis.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h3>Acompanhamento</h3>
+                <p>Relatórios semanais, ajustes contínuos, otimizações. Crescimento consistente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NICHOS ===== -->
+    <section>
+        <h2 class="section-title">Ideal para negócios com lead rápido.</h2>
+        <p class="section-subtitle">Se você precisa responder em segundos e converter consultivamente, DATARI é para você.</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">💅</div>
+                <h3>Clínicas de Estética</h3>
+                <p>Agendamentos automáticos, follow-up de leads qualificados, dados de conversão por procedimento.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💪</div>
+                <h3>Academias</h3>
+                <p>Tráfego convertido, matrículas fechadas, retenção via dados, ROI comprovado +35%.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🦷</div>
+                <h3>Odonto e Saúde</h3>
+                <p>Consultório conectado, agendamentos, nutrição de pacientes, análise de receita por especialidade.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BENEFÍCIOS ===== -->
+    <section>
+        <h2 class="section-title">Benefícios que importam.</h2>
+        <p class="section-subtitle">O que você ganha desde o primeiro mês.</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">📞</div>
+                <h3>Mais agendamentos</h3>
+                <p>Sem cair em armadilhas de marketing. Leads qualificados do início ao fim. Conversão previsível.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>Menos trabalho manual</h3>
+                <p>Sua equipe sai de WhatsApp repetitivo. Foco em venda e relacionamento. Produtividade +40%.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>Mais controle comercial</h3>
+                <p>Dados reais. Dashboard em tempo real. Decisões baseadas em números, não em achismo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA FINAL ===== -->
+    <section id="cta-final" class="cta-final">
+        <h2>Quer ver se faz sentido para sua operação?</h2>
+        <p>Agende um diagnóstico rápido e veja onde seu funil está perdendo dinheiro hoje.</p>
+        <div class="cta-buttons">
+            <a href="https://wa.me/5511999999999" class="btn">Receber proposta no WhatsApp</a>
+            <a href="mailto:seu-email@datari.com.br" class="btn" style="background: rgba(255, 255, 255, 0.2); border: 2px solid white;">Enviar e-mail</a>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section id="faq">
+        <h2 class="section-title">Dúvidas frequentes.</h2>
+        <p class="section-subtitle">Respostas diretas, sem complicação.</p>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Isso substitui minha equipe?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Não. DATARI libera sua equipe de tarefas repetitivas. Seu time sai de WhatsApp operacional para venda estratégica. Ganham tempo, ganham comissão maior.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Preciso trocar meu sistema atual?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Não. DATARI integra com seus sistemas atuais via API ou Zapier. Conecta WhatsApp, IG DM, Telegram, Facebook. Seu CRM continua funcionando normal.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Serve para empresa pequena?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    100%. Começamos com Starter (R$ 497) para microempresas. Crescimento gradual. Muitos clientes começaram enxutos e escalaram para Premium em 3 meses.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Quanto tempo leva para implantar?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Setup inicial em 48 horas. Diagnóstico, configuração do agente IA, testes, documentação. Você começa a receber leads qualificados já na primeira semana.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Isso funciona com WhatsApp?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Sim. WhatsApp é o pilar principal. DATARI integra via Z-API ou Zaia. Agente responde, qualifica, encaminha para seu telefone quando apropriado.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/images/logo-wordmark.png" alt="DATARI Wordmark">
+            </div>
+            <p class="footer-text">Automação + Inteligência de Dados para PMEs que querem vender mais, trabalhar menos.</p>
+            <div class="footer-links">
+                <a href="https://wa.me/5511999999999">WhatsApp</a>
+                <a href="mailto:seu-email@datari.com.br">E-mail</a>
+                <a href="#">Privacidade</a>
+            </div>
+            <div class="footer-bottom">
+                © 2026 DATARI. Todos os direitos reservados. Automação comercial inteligente.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== BOTÃO FLUTUANTE WHATSAPP ===== -->
+    <a href="https://wa.me/5511999999999" class="whatsapp-float" title="Falar no WhatsApp">
+        💬
+    </a>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Menu mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.getElementById('nav');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Fechar menu ao clicar em link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+
+        // FAQ Acordeão
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('open');
+
+                // Fechar outros FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('open');
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll com offset do header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Efeito de scroll no header
+        let lastScrollY = 0;
+        window.addEventListener('scroll', () => {
+            lastScrollY = window.scrollY;
+            
+            if (lastScrollY > 50) {
+                document.querySelector('header').style.boxShadow = '0 4px 20px rgba(10, 30, 63, 0.1)';
+            } else {
+                document.querySelector('header').style.boxShadow = '0 2px 20px rgba(10, 30, 63, 0.05)';
+            }
+        });
+    </script>
+</body>
+</html>
